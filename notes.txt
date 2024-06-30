@@ -1,0 +1,37 @@
+Seguridad Web y autenticación
+
+Para que se haga una revisión continua de los accesos de las rutas es necesario crear guardas
+Estas guardas se importan en las rutas, se puede hacer por layouts o por cada componente
+y esto evidentemente mejora todo el tema de rutas privadas y públicas.
+
+¿Dónde guardar el token?
+La mejor forma es a través de cookies (Cookie gestionada desde el navegador)
+Se hace con ayuda de la librería typescript-cookie
+
+-- GUARDS - Para proteger las rutas.
+Creación de guardas en versiones superiores 15 Angular
+
+Para quienes esten usando una version superior a Angular 15, seguro les haya dicho que el CanActivate está deprecado. Esto porque ahora los guards se recomiendan hacerlo mediante funciones. Por lo que quedaria de la siguiente manera
+
+export const redirectGuard: CanActivateFn = () => {
+  const token = inject(TokenService).getToken();
+  const router = inject(Router);
+
+  if (token) {
+    router.navigate(['/app']);
+  }
+  return true;
+};
+
+Mientras que el auth.guard.ts quedaria de la siguiente manera
+
+export const authGuard: CanActivateFn = () => { const token = inject(TokenService).getToken(); const router = inject(Router);
+
+if (!token) { router.navigate(['/login']); return false; } return true; };
+
+En el app-routing.module no tienen que cambiar nada, queda igualito. Espero le haya servido a alguien :)
+
+// ---------------------------------------------------------------------------------------------
+Reactividad de los datos
+
+-> Las variables con un signo de pesos al final es porque son un Observable
