@@ -27,6 +27,15 @@ export class AuthService {
     return this.http.post<ResponseLogin>(`${this.apiUrl}/auth/login`, { email, password })
       .pipe(tap(response => {
         this.tokenService.saveToken(response.access_token);
+        this.tokenService.saveRefreshToken(response.refresh_token);
+      }));
+  }
+
+  refreshToken(refreshToken: string) {
+    return this.http.post<ResponseLogin>(`${this.apiUrl}/auth/refresh-token`, { refreshToken }).
+      pipe(tap(response => {
+        this.tokenService.saveToken(response.access_token);
+        this.tokenService.saveRefreshToken(response.refresh_token);
       }));
   }
 
@@ -57,7 +66,7 @@ export class AuthService {
     }));
   }
 
-  getDataUser(){
+  getDataUser() {
     return this.user$.getValue();
   }
 

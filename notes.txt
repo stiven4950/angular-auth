@@ -35,3 +35,9 @@ En el app-routing.module no tienen que cambiar nada, queda igualito. Espero le h
 Reactividad de los datos
 
 -> Las variables con un signo de pesos al final es porque son un Observable
+
+// ---------------------------------------------------------------------------------------------
+Refresh token
+
+- Se debe almacenar en las cookies al igua que el access token
+- Modificar los guardas, ya entonces irán hata que se termine el refresh token
